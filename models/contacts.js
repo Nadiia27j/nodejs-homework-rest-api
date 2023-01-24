@@ -4,23 +4,23 @@ const { v4: uuidv4 } = require('uuid');
 
 const id = uuidv4;
 
-const contactsPath = path.resolve(__dirname, 'contacts.json');
+const contactsPath = path.resolve(__dirname, '../../models/contacts.json');
 
 
-const getAll = async () => {
+const listContacts = async () => {
   const data = JSON.parse( await fs.readFile(contactsPath, 'utf8'));
     return data;
 }
 
 const getContactById = async (contactId) => {
-  const data = await getAll();
+  const data = await listContacts();
   const contact = data.find((contact) => contact.id === contactId);
 
   return contact || null;
 }
 
 const addContact = async ({ name, email, phone }) => {
-  const data = await getAll();
+  const data = await listContacts();
   const newContact = {
     id,
     name,
@@ -33,7 +33,7 @@ const addContact = async ({ name, email, phone }) => {
 }
 
 const removeContact = async (contactId) => {
-  const data = await getAll();
+  const data = await listContacts();
   const removedContact = data.filter((contact) => contact.id !== contactId);
   if(removedContact === -1) {
     return null;
@@ -46,7 +46,7 @@ const removeContact = async (contactId) => {
 
 
 const updateContact = async (contactId, { name, email, phone }) => {
-  const data = await getAll();
+  const data = await listContacts();
   const update = data.filter((contact) => contact.id !== contactId);
 
   if(update === -1) {
@@ -58,7 +58,7 @@ const updateContact = async (contactId, { name, email, phone }) => {
 }
 
 module.exports = {
-  getAll,
+  listContacts,
   getContactById,
   removeContact,
   addContact,
