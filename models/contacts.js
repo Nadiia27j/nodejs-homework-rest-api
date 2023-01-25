@@ -12,9 +12,9 @@ const listContacts = async () => {
     return data;
 }
 
-const getContactById = async (contactId) => {
+const getContactById = async (id) => {
   const data = await listContacts();
-  const contact = data.find((contact) => contact.id === contactId);
+  const contact = data.find((contact) => contact.id === id);
 
   return contact || null;
 }
@@ -32,9 +32,9 @@ const addContact = async ({ name, email, phone }) => {
   return newContact;
 }
 
-const removeContact = async (contactId) => {
+const removeContact = async (id) => {
   const data = await listContacts();
-  const removedContact = data.filter((contact) => contact.id !== contactId);
+  const removedContact = data.filter((contact) => contact.id !== id);
   if(removedContact === -1) {
     return null;
   }
@@ -45,9 +45,9 @@ const removeContact = async (contactId) => {
 
 
 
-const updateContact = async (contactId, { name, email, phone }) => {
+const updateContact = async (id, { name, email, phone }) => {
   const data = await listContacts();
-  const update = data.filter((contact) => contact.id !== contactId);
+  const update = data.findIndex((contact) => contact.id !== id);
 
   if(update === -1) {
     return null;
