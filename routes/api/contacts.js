@@ -4,6 +4,8 @@ const router = express.Router();
 const createError = require("http-errors");
 const Joi = require("joi");
 
+const {contacts: ctrl} = require("../../controllers");
+
 const contactsSchema = Joi.object({
   name: Joi.string().min(3).required(),
   email: Joi.string().required(),
@@ -12,114 +14,17 @@ const contactsSchema = Joi.object({
 
 const contactsOperations = require("../../models/contacts");
 
-router.get("/", async (req, res, next) => {
-  try {
-    const contacts = await contactsOperations.listContacts();
-    res.json({
-      status: "success",
-      code: 200,
-      data: {
-        result: contacts
-      }
-    });
-  } catch (error) {
-    next(error);
-  }
-});
+router.get("/", ctrl.getAll);
 
-router.get("/:id", async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const result = await contactsOperations.getContactById(id);
+router.get("/:id", ctrl.getById);
 
-    if (!result) {
-      throw createError(404, `Contact with id=${id} not found`);
-    }
+router.post("/", ctrl.add);
 
-    res.json({
-      status: "success",
-      code: 200,
-      data: {
-        result
-      }
-    });
-  } catch (error) {
-    next(error);
-  }
-});
-
-router.post("/", async (req, res, next) => {
-  try {
-    const { error } = contactsSchema.validate(req.body);
-    if (error) {
-      error.status = 400;
-      throw error;
-    }
-
-    const result = await contactsOperations.addContact(req.body);
-    res.status(201).json({
-      status: "success",
-      code: 201,
-      data: {
-        result
-      }
-    });
-  } catch (error) {
-    next(error);
-  }
-});
-
-
-
-router.put("/:id", async (req, res, next) => {
-  try {
-    const { error } = contactsSchema.validate(req.body);
-    if (error) {
-      error.status = 400;
-      throw error;
-    }
-    const { id } = req.params;
-    const result = await contactsOperations.updateContact(id, req.body);
-
-    if (!result) {
-      throw createError(404, `Contact with id=${id} not found`);
-    }
-
-    res.json({
-      status: "success",
-      code: 200,
-      data: {
-        result
-      }
-    });
-  } catch (error) {}
-});
+router.put("/:id", ctrl.updateById);
 
 
 
 
-router.delete("/:id", async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const result = await contactsOperations.removeContact(id);
-    
-    if (!result) {
-      throw createError(404, `Contact with id=${id} not found`);
-    }
-
-    res.json({
-      status: "success",
-      code: 200,
-      message: "contact deleted ",
-      data: {
-        result
-      }
-    })
-
-  } catch (error) {
-    next(error);
-  }
-  
-});
+router.delete("/:id", );
 
 module.exports = router;
