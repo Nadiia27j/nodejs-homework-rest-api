@@ -2,7 +2,7 @@ const fs = require('fs/promises');
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 
-const id = uuidv4;
+const id = uuidv4();
 
 const contactsPath = path.resolve(__dirname, 'contacts.json');
 

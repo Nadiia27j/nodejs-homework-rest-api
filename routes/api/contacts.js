@@ -1,30 +1,25 @@
 const express = require("express");
 const router = express.Router();
 
-const createError = require("http-errors");
-const Joi = require("joi");
+const {validation, ctrlWrapper} = require("../../middlewares");
+const {contactsSchema} = require("../../schemas");
 
 const {contacts: ctrl} = require("../../controllers");
 
-const contactsSchema = Joi.object({
-  name: Joi.string().min(3).required(),
-  email: Joi.string().required(),
-  phone: Joi.number().min(10).required()
-});
-
-const contactsOperations = require("../../models/contacts");
-
-router.get("/", ctrl.getAll);
-
-router.get("/:id", ctrl.getById);
-
-router.post("/", ctrl.add);
-
-router.put("/:id", ctrl.updateById);
+const validateMiddleware = validation(contactsSchema);
 
 
 
+router.get("/", ctrlWrapper(ctrl.getAll));
 
-router.delete("/:id", );
+router.get("/:id", ctrlWrapper(ctrl.getById));
+
+router.post("/", validateMiddleware, ctrlWrapper(ctrl.add));
+
+router.put("/:id", validateMiddleware, ctrlWrapper(ctrl.updateById));
+
+router.delete("/:id", ctrlWrapper(ctrl.removeById));
+
+
 
 module.exports = router;
