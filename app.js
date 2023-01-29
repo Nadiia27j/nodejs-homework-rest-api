@@ -13,7 +13,7 @@ mongoose.connect(DB_HOST)
   process.exit(1)
 });
 
-
+console.log(process.env);
 
 const app = express()
 
