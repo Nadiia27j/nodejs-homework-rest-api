@@ -1,19 +1,8 @@
-const mongoose = require("mongoose");
 const express = require('express');
 const logger = require('morgan');
 const cors = require('cors');
+
 const contactsRouter = require('./routes/api/contacts');
-
-
-
-mongoose.connect(DB_HOST)
-.then(() => console.log("Database connection successful"))
-.catch(error => {
-  console.log(error.message);
-  process.exit(1)
-});
-
-console.log(process.env);
 
 const app = express()
 
