@@ -20,6 +20,6 @@ router.put("/:id", validateMiddleware, ctrlWrapper(ctrl.updateById));
 
 router.delete("/:id", ctrlWrapper(ctrl.removeById));
 
-
+router.patch("/:id/favorite", validateMiddleware, ctrlWrapper(ctrl.updateStatus));
 
 module.exports = router;
