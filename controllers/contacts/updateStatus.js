@@ -3,8 +3,7 @@ const createError = require("http-errors");
 
 const updateStatus = async (req, res) => {
     const {id} = req.params;
-    const {favorite} = req.body;
-    const result = await Contact.findByIdAndUpdate(id, {favorite}, {new: true});
+    const result = await Contact.findByIdAndUpdate(id, req.body, {new: true});
 
     if(!req.body){
         res.status(400).json({"message": "missing field favorite"});
