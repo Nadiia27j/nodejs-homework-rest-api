@@ -8,7 +8,6 @@ const contactsSchema = Joi.object({
 });
 
 
-
 const statusSchema = Joi.object({
   favorite: Joi.boolean().required(),
 })
