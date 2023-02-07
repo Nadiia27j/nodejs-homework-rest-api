@@ -1,16 +1,18 @@
 const {	Unauthorized} = require("http-errors");
-// const bcrypt = require("bcryptjs");
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const {User} = require("../../models");
 
+// const {SECRET_KEY} = process.env;
+// console.log(SECRET_KEY);
 
 const login = async(req, res) => {
     const {email, password} = req.body;
     const user = await User.findOne({email});
 
-    // const passCompare = bcrypt.compareSync(password, user.password);
+    const passCompare = bcrypt.compareSync(password, user.password);
 
-    if(!user || !user.comparePassword(password)) {
+    if(!user || !passCompare) {
         throw new Unauthorized("Email or password is wrong");
     }
 
