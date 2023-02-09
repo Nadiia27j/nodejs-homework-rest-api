@@ -17,18 +17,20 @@ const auth = async (req, res, next) => {
     const { id } = jwt.verify(token, SECRET_KEY);
     const user = await User.findById(id);
 
-    req.user = user;
-   
     if (!user) {
       throw new Unauthorized("Not authorized");
     }
+
+    req.user = user;
+    next();
+    
   } catch (error) {
     if (error.name === "Invalid sugnature") {
       throw Unauthorized("jwt token is not valid");
     }
-    throw error;
+    next(error);
   }
-  next();
+  
 };
 
 module.exports = auth;
