@@ -18,21 +18,22 @@ const userSchema = Schema(
       enum: ["starter", "pro", "business"],
       default: "starter"
     },
-    token: String
+    token: {
+      type: String,
+      default: null
+    }
   },
   { versionKey: false, timestamps: true }
 );
 
 userSchema.methods.comparePassword = function(password) {
   return bcrypt.compareSync(password, this.password);
-}
-
+};
 
 const joiAuthSchema = Joi.object({
   password: Joi.string().min(6).required(),
   email: Joi.string().required()
 });
-
 
 const User = model("user", userSchema);
 
