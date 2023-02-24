@@ -19,7 +19,7 @@ const register = async (req, res) => {
   const hashPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10));
 
   const verificationToken = uuidv4();
-  console.log(verificationToken);
+  
 
   const result = await User.create({
     email,
@@ -30,6 +30,7 @@ const register = async (req, res) => {
 
   const mail = {
     to: email,
+    from: "nadiya77723@gmail.com",
     subject: "Please confirm your email",
     html: `<a target="_blank" href="http://localhost:3000/api/users/verify/${verificationToken}">Email verification</a>`
   };

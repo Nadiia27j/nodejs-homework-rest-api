@@ -26,6 +26,7 @@
     "nodemailer": "^6.9.1",
     "sendgrid": "^5.2.3",
     "uuid": "^9.0.0",
+    "uuidv4": "^6.2.13",
     "ws": "^8.12.1"
   },
   "devDependencies": {

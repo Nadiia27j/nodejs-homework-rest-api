@@ -11,7 +11,7 @@ sgMail.setApiKey(SENDGRID_API_KEY);
 
 const sendEmail = async data => {
   console.log(data);
-  const email = {data, from: "nadiya77723@gmail.com" };
+  const email = {...data, from: "nadiya77723@gmail.com" };
 
   // eslint-disable-next-line no-useless-catch
   try {
@@ -27,16 +27,6 @@ module.exports = sendEmail;
 
 
 
-// const email = {
-//   to: "galec93612@youke1.com",
-//   from: "nadiya77723@gmail.com",
-//   subject: "Нове повідомлення з сайту",
-//   html: "<p>З сайту прийшла нова заявка<p/>"
-// };
-
-// sgMail.send(email)
-// .then(() => console.log("Email send success"))
-// .catch(error => console.log(error.message))
 
 
 
